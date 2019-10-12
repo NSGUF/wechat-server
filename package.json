@@ -1,0 +1,58 @@
+{
+  "name": "wechat-server",
+  "version": "0.0.1",
+  "description": "仿微信后台",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "author": {
+    "name": "NSGUF",
+    "email": "1968083780@qq.com"
+  },
+  "tags": [
+    "仿微信",
+    "typescript",
+    "koa2"
+  ],
+  "devDependencies": {
+    "@types/koa": "^2.0.45",
+    "@types/koa-bodyparser": "^4.2.0",
+    "@types/koa-helmet": "^3.1.2",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.0.27",
+    "@types/koa-static": "^4.0.1",
+    "@types/koa2-cors": "^2.0.1",
+    "@types/moment": "^2.13.0",
+    "@types/mongoose": "^5.5.20",
+    "@types/node": "^9.6.49",
+    "@types/socket.io": "^2.1.4",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.0",
+    "gulp-typescript": "^5.0.1",
+    "koa-static": "^5.0.0",
+    "nodemon": "^1.19.1",
+    "ts-loader": "^6.0.3",
+    "ts-node": "^8.3.0",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "class-validator": "^0.9.1",
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-helmet": "^4.2.0",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-session2": "^2.2.10",
+    "koa2-cors": "^2.0.6",
+    "moment": "^2.24.0",
+    "mongodb": "^3.2.7",
+    "mongoose": "^5.7.4",
+    "socket.io": "^2.3.0",
+    "svg-captcha": "^1.4.0",
+    "xss": "^0.3.3"
+  },
+  "scripts": {
+    "server": "ts-node ./src/index.ts",
+    "watch-serve": "nodemon --watch './src/**/*' -e ts,tsx --exec ts-node ./src/index.ts"
+  }
+}
