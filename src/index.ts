@@ -196,8 +196,9 @@ io.on("connection", (socket: any) => {
     //     DBModule.NewsList.addNews({from: from, to: to, msg: msg, date: date})
     // })
 
-    socket.on("disconnect", (data: any) => {
+    socket.on("disconnect", async (data: any) => {
         console.log("disconnect", data);
+        await model.user.offline(socketId)
     });
 });
 

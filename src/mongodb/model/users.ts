@@ -5,7 +5,18 @@ import {UsersModel, IFriend, IUser} from '../schema/users'
 
 export default class Users {
     public static async updateSocketId(userId: string, socketId: string) {
-        UsersModel.findByIdAndUpdate(userId, {$set: {socketId}}, (err: any, userToBeUpdated: any) => {
+        UsersModel.findByIdAndUpdate(userId, {$set: {socketId, status: true}}, (err: any, userToBeUpdated: any) => {
+            // if (err) return handleError(err);
+            // userToBeUpdated.socketId = socketId;
+            // userToBeUpdated.save(function (err: any) {
+            //     // if (err) return handleError(err);
+            //     // res.send(tank);
+            // });
+        })
+
+    }
+    public static async offline(socketId: string) {
+        UsersModel.findOneAndUpdate({socketId}, {$set: {status: false}}, (err: any, userToBeUpdated: any) => {
             // if (err) return handleError(err);
             // userToBeUpdated.socketId = socketId;
             // userToBeUpdated.save(function (err: any) {
@@ -69,8 +80,9 @@ export default class Users {
 
     public static async getFriends(userId: string) {
         const toUser: any = await UsersModel.findById(userId).exec()
-        return toUser.friends?toUser.friends:[]
+        return toUser.friends ? toUser.friends : []
     }
+
     public static async seedMessage(fromUserId: string, toUserId: string) {
         const fromUser: any = await UsersModel.findById(fromUserId).exec()
 
