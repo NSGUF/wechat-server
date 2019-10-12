@@ -11,7 +11,7 @@ import {tools} from "./controller"
 import * as KoaLogger from 'koa-logger'
 import * as KoaHelmet from 'koa-helmet'
 import {getAjaxResponse, crypt} from "./utils/tools"
-import * as config   from './config'
+import * as config from './config'
 
 require('./mongodb/index')
 import {IFriend} from "./mongodb/schema/users";
@@ -91,6 +91,7 @@ io.on("connection", (socket: any) => {
 
     //登录
     socket.on("login", async (userId: string) => {
+        console.log(typeof socketId)
         await model.user.updateSocketId(userId, socketId)
         // await model.socketModel.updateSocketId(userId, socketId)//socketModel.saveUserSocketId(userId, socketId);
     });
@@ -119,6 +120,10 @@ io.on("connection", (socket: any) => {
 
         const lastDate = new Date()
         const lastDateStr = moment(lastDate).format('YYYY-MM-DD HH:mm')
+
+        if (socketId !== fromUser.socketId) {
+            fromUser.socketId = socketId
+        }
 
         for (let i = 0; i < fromUser.friends.length; i++) {
             if (String(fromUser.friends[i]._id) === String(toUser._id)) {
@@ -160,7 +165,9 @@ io.on("connection", (socket: any) => {
         const result: any = await model.messages.addMessage(data)
 
         io.to(fromSocketId).emit('newMsg', result)
-        io.to(toSocketId).emit('refreshFriends', toUser.friends)
+        io.to(toSocketId).emit('refreshFriends', toUser.friends, (error: any, message: any) => {
+            console.log('169:', error, message)
+        })
         io.to(toSocketId).emit('newMsg', result)
     })
 

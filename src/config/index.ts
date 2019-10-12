@@ -1,4 +1,4 @@
-const ip = 'localhost'
+const ip = '47.103.2.26'
 const port = 8080
 const dbPath = `mongodb://${ip}/wechat-mongoose`
 const ipAndPort = `http://${ip}:${port}`
