@@ -36,6 +36,11 @@ export const AppRoutes = [
     action: controller.users.doLogin
   },
   {
+    path: "/status",
+    method: 'post',
+    action: controller.users.keepStatus,
+  },
+  {
     path: "/captcha",
     method: 'get',
     action: controller.tools.captcha

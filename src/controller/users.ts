@@ -148,4 +148,21 @@ export default class Users {
             });
         }
     }
+
+    public static async keepStatus(ctx: BaseContext) {
+        const {phoneNumber, password} = ctx.request.body;
+        const user: any = await UsersModel.findOne({phoneNumber: phoneNumber})
+
+        if (user&&user.password===password) {
+            ctx.session.user = user
+            ctx.cookies.set('sign', crypt.cryptUserId(user.id), {
+                httpOnly: false
+            });
+            ctx.status = 200;
+            ctx.body = getAjaxResponse({
+                data: user,
+                msg: '登录成功'
+            });
+        }
+    }
 }
