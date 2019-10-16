@@ -14,14 +14,22 @@ export default class Messages {
 
     public static async getMessagesByTwoId(ctx: BaseContext) {
         const fromUserId = ctx.request.query.fromUserId
+        const page: number = Number(ctx.request.query.page) - 1
+        const pageSize: number = Number(ctx.request.query.pageSize)
         const toUserId = ctx.request.query.toUserId
-        const messages: Object[] = await MessagesModel.find({ $or: [ {fromId: fromUserId, toId: toUserId}, {fromId: toUserId, toId: fromUserId} ] }).sort({ date: 1 }).skip(0).exec();
+        const messages: Object[] = await MessagesModel.find({
+            $or: [{
+                fromId: fromUserId,
+                toId: toUserId
+            }, {fromId: toUserId, toId: fromUserId}]
+        }).sort({date: -1}).skip(page * pageSize).limit(pageSize).exec();
         // const resultMessage = [...messageOne, ...messageTwo]/*.sort((item1: any, item2: any) => {
         //     // return item1.date.getTime() - item2.date.getTime()
         // })
+        const resultMessages = messages.reverse()
 
 
-        ctx.body = getAjaxResponse({data: messages});
+        ctx.body = getAjaxResponse({data: resultMessages});
     }
 
 }
